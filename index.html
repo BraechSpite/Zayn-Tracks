@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zayn Tracks</title>
+    <!-- Favicon using Shanks.jpg -->
+    <link rel="icon" type="image/jpeg" href="Shanks.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="Shanks.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress" id="readingProgress" style="display:none;"></div>
+
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">Zayn Tracks</div>
+            <div class="nav-links">
+                <a href="#dashboard" class="nav-link">Dashboard</a>
+                <a href="#quick-tasks" class="nav-link">Quick Tasks</a>
+                <a href="#spiritual" class="nav-link">Spiritual</a>
+                <a href="#academic" class="nav-link">Academic</a>
+                <a href="#financial" class="nav-link">Financial</a>
+                <a href="#physical" class="nav-link">Physical</a>
+                <a href="#responsibility" class="nav-link">Responsibility</a>
+            </div>
+            <button class="hamburger-btn" id="hamburgerBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <div class="sidebar-title">NAVIGATE</div>
+            <button class="close-sidebar" id="closeSidebar"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-content">
+            <a href="#dashboard" class="sidebar-card"><div class="sidebar-card-icon"><i class="fas fa-chart-line"></i></div><div class="sidebar-card-text"><h4>Dashboard</h4></div></a>
+            <a href="#quick-tasks" class="sidebar-card"><div class="sidebar-card-icon"><i class="fas fa-tasks"></i></div><div class="sidebar-card-text"><h4>Quick Tasks</h4></div></a>
+            <a href="#spiritual" class="sidebar-card"><div class="sidebar-card-icon"><i class="fas fa-mosque"></i></div><div class="sidebar-card-text"><h4>Spiritual</h4></div></a>
+            <a href="#academic" class="sidebar-card"><div class="sidebar-card-icon"><i class="fas fa-book-open"></i></div><div class="sidebar-card-text"><h4>Academic</h4></div></a>
+            <a href="#financial" class="sidebar-card"><div class="sidebar-card-icon"><i class="fas fa-coins"></i></div><div class="sidebar-card-text"><h4>Financial</h4></div></a>
+            <a href="#physical" class="sidebar-card"><div class="sidebar-card-icon"><i class="fas fa-dumbbell"></i></div><div class="sidebar-card-text"><h4>Physical</h4></div></a>
+            <a href="#responsibility" class="sidebar-card"><div class="sidebar-card-icon"><i class="fas fa-home"></i></div><div class="sidebar-card-text"><h4>Responsibility</h4></div></a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-media-video" autoplay muted loop playsinline>
+            <source src="https://share.cloudstorage.bar/loc_1781173094362_621738_0/geralt-frostbound-duel.3840x2160.mp4" type="video/mp4">
+        </video>
+        <!-- hero overlay removed - bg shown fully -->
+        <div class="hero-content">
+            <h1 class="hero-heading">The Art Of Being Persistent</h1>
+            <p class="hero-subheading"> </p>
+            <div class="hero-btn-wrap"><a href="#dashboard" class="hero-button"><span>B E G I N</span></a></div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD SECTION (Compact - fits in viewport) -->
+    <section id="dashboard" class="content-section dashboard-section">
+        <div class="section-background"><img class="section-media" src="assets/images/dashboard-bg.jpg" onerror="this.src='assets/images/dashboard-bg.png'" alt=""></div>
+        <div class="container compact-container">
+            <h2 class="section-title compact-title fade-in-up">Dashboard</h2>
+            
+            <!-- Date Selector -->
+            <div class="date-selector fade-in-up">
+                <label for="datePicker"><i class="fas fa-calendar"></i></label>
+                <input type="date" id="datePicker" class="date-input">
+                <button id="todayBtn" class="today-btn">Today</button>
+            </div>
+
+            <!-- Dashboard Stats (Compact) -->
+            <div class="dashboard-stats compact-stats fade-in-up">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-content">
+                        <h3>Score</h3>
+                        <p class="stat-value" id="todayScore">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-content">
+                        <h3>Tasks</h3>
+                        <p class="stat-value" id="tasksCompleted">0/20</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                    <div class="stat-content">
+                        <h3>Rate</h3>
+                        <p class="stat-value" id="completionRate">0%</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                    <div class="stat-content">
+                        <h3>Streak</h3>
+                        <p class="stat-value" id="streakDays">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts (Compact) -->
+            <div class="charts-container compact-charts fade-in-up">
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-pie"></i> Breakdown</h3>
+                    <canvas id="sectionChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-bar"></i> Weekly</h3>
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK TASKS SECTION (Separated from Dashboard) -->
+    <section id="quick-tasks" class="content-section">
+        <div class="section-background"><img class="section-media" src="assets/images/quicktasks-bg.jpg" onerror="this.src='assets/images/quicktasks-bg.png'" alt=""></div>
+        <div class="container">
+            <h2 class="section-title fade-in-up">Quick Task Completion</h2>
+            <div class="quick-tasks fade-in-up">
+                <div class="quick-tasks-grid" id="quickTasksGrid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1st Section: Spiritual Healing -->
+    <section id="spiritual" class="content-section">
+        <div class="section-background"><img class="section-media" src="assets/images/spiritual-bg.jpg" onerror="this.src='assets/images/spiritual-bg.png'" alt=""></div>
+        <div class="container">
+            <h2 class="section-title fade-in-up">Spiritual Healing</h2>
+            <div class="tasks-grid">
+                <div class="glass-card fade-in-up">
+                    <div class="card-header">
+                        <i class="fas fa-pray"></i>
+                        <h3>5 Daily Namaz</h3>
+                    </div>
+                    <div class="task-list">
+                        <label class="task-item"><input type="checkbox" data-id="fajr" data-points="40" data-section="spiritual"><span class="checkmark"></span><div class="task-info"><strong>Fajr</strong><span>4 Rakat (2 + 2) - 40 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="zuhr" data-points="40" data-section="spiritual"><span class="checkmark"></span><div class="task-info"><strong>Zuhr</strong><span>10 Rakat (4 + 4 + 2) - 40 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="asr" data-points="40" data-section="spiritual"><span class="checkmark"></span><div class="task-info"><strong>Asr</strong><span>6 Rakat (4 + 2) - 40 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="maghrib" data-points="40" data-section="spiritual"><span class="checkmark"></span><div class="task-info"><strong>Maghrib</strong><span>5 Rakat (3 + 2) - 40 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="isha" data-points="40" data-section="spiritual"><span class="checkmark"></span><div class="task-info"><strong>Isha</strong><span>9 Rakat (4 + 3 + 2) - 40 pts</span></div></label>
+                    </div>
+                </div>
+                <div class="glass-card fade-in-up">
+                    <div class="card-header"><i class="fas fa-quran"></i><h3>Daily Islamic Learning</h3></div>
+                    <div class="task-list">
+                        <label class="task-item"><input type="checkbox" data-id="quran-class" data-points="50" data-section="spiritual"><span class="checkmark"></span><div class="task-info"><strong>Quran Class</strong><span>15 Minutes - 50 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="hadith-video" data-points="50" data-section="spiritual"><span class="checkmark"></span><div class="task-info"><strong>Hadith Video</strong><span>Upload 1 Video - 50 pts</span></div></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2nd Section: Academic Healing -->
+    <section id="academic" class="content-section">
+        <div class="section-background"><img class="section-media" src="assets/images/academic-bg.jpg" onerror="this.src='assets/images/academic-bg.png'" alt=""></div>
+        <div class="container">
+            <h2 class="section-title fade-in-up">Academic Healing</h2>
+            <div class="tasks-grid">
+                <div class="glass-card fade-in-up">
+                    <div class="card-header"><i class="fas fa-brain"></i><h3>Daily Study Goal: 8 Hours</h3></div>
+                    <div class="task-list">
+                        <label class="task-item"><input type="checkbox" data-id="math" data-points="50" data-section="academic"><span class="checkmark"></span><div class="task-info"><strong>Mathematics</strong><span>2 Hours - 50 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="physics" data-points="40" data-section="academic"><span class="checkmark"></span><div class="task-info"><strong>Physics</strong><span>1 Hour - 40 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="chemistry" data-points="40" data-section="academic"><span class="checkmark"></span><div class="task-info"><strong>Chemistry</strong><span>1 Hour - 40 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="cs" data-points="40" data-section="academic"><span class="checkmark"></span><div class="task-info"><strong>Computer Science</strong><span>1 Hour - 40 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="coding" data-points="30" data-section="academic"><span class="checkmark"></span><div class="task-info"><strong>Coding Practice</strong><span>30 Minutes - 30 pts</span></div></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3rd Section: Financial Healing -->
+    <section id="financial" class="content-section">
+        <div class="section-background"><img class="section-media" src="assets/images/financial-bg.jpg" onerror="this.src='assets/images/financial-bg.png'" alt=""></div>
+        <div class="container">
+            <h2 class="section-title fade-in-up">Financial Healing</h2>
+            <div class="tasks-grid">
+                <div class="glass-card fade-in-up">
+                    <div class="card-header"><i class="fas fa-chart-line"></i><h3>Income Building</h3></div>
+                    <div class="task-list">
+                        <label class="task-item"><input type="checkbox" data-id="hard-work" data-points="100" data-section="financial"><span class="checkmark"></span><div class="task-info"><strong>Deep Work</strong><span>3 Hours towards earning - 100 pts</span></div></label>
+                    </div>
+                </div>
+                <div class="glass-card fade-in-up">
+                    <div class="card-header"><i class="fas fa-pen-fancy"></i><h3>Daily Reflection</h3></div>
+                    <div class="reflection-container">
+                        <div class="reflection-item">
+                            <label for="skillImproved"><i class="fas fa-lightbulb"></i> What skill did I improve today?</label>
+                            <textarea id="skillImproved" class="reflection-textarea" placeholder="Describe the skill you enhanced today..." data-id="skill-improved" data-points="50"></textarea>
+                        </div>
+                        <div class="reflection-item">
+                            <label for="incomeProgress"><i class="fas fa-coins"></i> How did I increase my income potential?</label>
+                            <textarea id="incomeProgress" class="reflection-textarea" placeholder="Explain how you increased income potential and by how much..." data-id="income-progress" data-points="50"></textarea>
+                        </div>
+                        <div class="reflection-footer"><span class="auto-save-indicator"><i class="fas fa-save"></i> Auto-saving...</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4th Section: Physical Healing -->
+    <section id="physical" class="content-section">
+        <div class="section-background"><img class="section-media" src="assets/images/physical-bg.jpg" onerror="this.src='assets/images/physical-bg.png'" alt=""></div>
+        <div class="container">
+            <h2 class="section-title fade-in-up">Physical Healing</h2>
+            <div class="tasks-grid">
+                <div class="glass-card fade-in-up">
+                    <div class="card-header"><i class="fas fa-heartbeat"></i><h3>Daily Goal: 1h 30m</h3></div>
+                    <div class="task-list">
+                        <label class="task-item"><input type="checkbox" data-id="cardio" data-points="40" data-section="physical"><span class="checkmark"></span><div class="task-info"><strong>Cardio</strong><span>10,000 Steps - 40 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="calisthenics" data-points="50" data-section="physical"><span class="checkmark"></span><div class="task-info"><strong>Calisthenics</strong><span>Exercises - 50 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="water" data-points="30" data-section="physical"><span class="checkmark"></span><div class="task-info"><strong>Water</strong><span>4 Glasses - 30 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="calories" data-points="30" data-section="physical"><span class="checkmark"></span><div class="task-info"><strong>Calories</strong><span>Deficit Maintained - 30 pts</span></div></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5th Section: Responsibility as a Son -->
+    <section id="responsibility" class="content-section">
+        <div class="section-background"><img class="section-media" src="assets/images/responsibility-bg.jpg" onerror="this.src='assets/images/responsibility-bg.png'" alt=""></div>
+        <div class="container">
+            <h2 class="section-title fade-in-up">Responsibility as a Son</h2>
+            <div class="tasks-grid">
+                <div class="glass-card fade-in-up">
+                    <div class="card-header"><i class="fas fa-hands-helping"></i><h3>Daily Duties & Conduct</h3></div>
+                    <div class="task-list">
+                        <label class="task-item"><input type="checkbox" data-id="dishes" data-points="30" data-section="responsibility"><span class="checkmark"></span><div class="task-info"><strong>Dishes</strong><span>Twice a day - 30 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="laundry" data-points="30" data-section="responsibility"><span class="checkmark"></span><div class="task-info"><strong>Laundry</strong><span>Clothes washed - 30 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="respect-mom" data-points="50" data-section="responsibility"><span class="checkmark"></span><div class="task-info"><strong>Respect</strong><span>Never say "No" to Mom - 50 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="trash" data-points="20" data-section="responsibility"><span class="checkmark"></span><div class="task-info"><strong>Trash</strong><span>Take care of bins - 20 pts</span></div></label>
+                        <label class="task-item"><input type="checkbox" data-id="polite-talk" data-points="30" data-section="responsibility"><span class="checkmark"></span><div class="task-info"><strong>Communication</strong><span>Talk politely - 30 pts</span></div></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-inner">
+
+            <!-- QUOTE BLOCK -->
+            <div class="footer-quote-block">
+                <span class="footer-quote-line"></span>
+                <p class="footer-quote">"The night is darkest just before the dawn.<br>And I promise you — I will even out the odds."</p>
+                <span class="footer-quote-line"></span>
+            </div>
+
+            <p class="footer-sub-quote">— discipline doesn't care about your emotions. neither do i.</p>
+
+            <!-- DIVIDER -->
+            <div class="footer-divider">
+                <span></span><i class="fas fa-skull"></i><span></span>
+            </div>
+
+            <!-- SOCIAL LINKS -->
+            <div class="footer-socials">
+                <a href="https://instagram.com/dex.zay" target="_blank" class="footer-social-btn">
+                    <i class="fab fa-instagram"></i>
+                    <span>@dex.zay</span>
+                </a>
+                <a href="https://t.me/dex_zay" target="_blank" class="footer-social-btn">
+                    <i class="fab fa-telegram"></i>
+                    <span>dex_zay</span>
+                </a>
+                <a href="https://discord.com/users/dexzay" target="_blank" class="footer-social-btn">
+                    <i class="fab fa-discord"></i>
+                    <span>dexzay</span>
+                </a>
+            </div>
+
+            <!-- COPYRIGHT -->
+            <p class="footer-copy">&copy; 2026 Zayn Tracks &nbsp;&nbsp; </p>
+
+        </div>
+    </footer>
+
+    <script src="navigation-hide.js"></script>
+    <script src="main.js"></script>
+
+    <!-- ===== MUSIC PLAYER ===== -->
+    <button id="musicBtn" title="Toggle Music" aria-label="Toggle Music">
+        <svg id="musicIconPlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 14v-2a9 9 0 0 1 18 0v2"/>
+            <rect x="2" y="14" width="4" height="6" rx="2"/>
+            <rect x="18" y="14" width="4" height="6" rx="2"/>
+        </svg>
+        <svg id="musicIconPause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+            <rect x="5" y="4" width="4" height="16" rx="1.5"/>
+            <rect x="15" y="4" width="4" height="16" rx="1.5"/>
+        </svg>
+        <span class="music-waves" id="musicWaves">
+            <span class="wave w1"></span>
+            <span class="wave w2"></span>
+            <span class="wave w3"></span>
+        </span>
+    </button>
+
+    <script>
+        (function () {
+            const btn   = document.getElementById('musicBtn');
+            const play  = document.getElementById('musicIconPlay');
+            const pause = document.getElementById('musicIconPause');
+            const waves = document.getElementById('musicWaves');
+            const audio = new Audio('Summer.mp3');
+            audio.loop   = true;
+            audio.volume = 0.6;
+            let playing  = false;
+
+            function updateUI() {
+                if (playing) {
+                    play.style.display  = 'none';
+                    pause.style.display = 'block';
+                    waves.classList.add('active');
+                    btn.classList.add('playing');
+                } else {
+                    play.style.display  = 'block';
+                    pause.style.display = 'none';
+                    waves.classList.remove('active');
+                    btn.classList.remove('playing');
+                }
+            }
+
+            // Show when cursor is within 90px of bottom-right corner
+            document.addEventListener('mousemove', (e) => {
+                const fromRight  = window.innerWidth  - e.clientX;
+                const fromBottom = window.innerHeight - e.clientY;
+                const near = fromRight < 90 && fromBottom < 90;
+                if (near || playing) {
+                    btn.style.opacity       = '1';
+                    btn.style.pointerEvents = 'auto';
+                } else {
+                    btn.style.opacity       = '0';
+                    btn.style.pointerEvents = 'none';
+                }
+            });
+
+            btn.addEventListener('click', () => {
+                if (playing) { audio.pause(); playing = false; }
+                else         { audio.play().catch(() => {}); playing = true; }
+                updateUI();
+            });
+        })();
+    </script>
+</body>
+</html>
